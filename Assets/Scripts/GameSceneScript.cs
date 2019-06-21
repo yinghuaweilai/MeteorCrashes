@@ -2,9 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameSceneScript : MonoBehaviour
 {
+    public Button btn_pause;
+
     public User user;  // 加载游戏难度、道具等级等
     public MeteoritePointScript meteoritePointScript;  // 陨石生成的管理类
     private Camera _currentCamera;
@@ -14,6 +17,25 @@ public class GameSceneScript : MonoBehaviour
         user = UserProtobuf.Instance.UserDeserialization();  // 反序列化，读取User
         meteoritePointScript = GameObject.Find("MeteoritePoint").GetComponent<MeteoritePointScript>();
         _currentCamera = Camera.main;
+    }
+
+    private void Start()
+    {
+        btn_pause.onClick.AddListener(PauseGame);
+    }
+
+    //暂停按钮事件
+    private void PauseGame()
+    {
+        if (!GameObject.Find("PauseScene"))
+        {
+            GameObject pauseScene = Instantiate(Resources.Load<GameObject>("Prefabs/PauseScene"));
+            pauseScene.transform.SetParent(transform, false);
+            pauseScene.name = "PauseScene";
+            pauseScene.transform.position += new Vector3(0, 0, -10);
+
+            Time.timeScale = 0;
+        }
     }
 
     void Update()
@@ -110,5 +132,10 @@ public class GameSceneScript : MonoBehaviour
             meteor.GetComponent<Rigidbody2D>().AddForce(unit * 300);
             meteoritePointScript.Meteors.Remove(meteor);
         }
+    }
+
+    private void OnDestroy()
+    {
+        btn_pause.onClick.RemoveListener(PauseGame);
     }
 }
