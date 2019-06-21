@@ -16,17 +16,16 @@ public class EarthScript : MonoBehaviour
         
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
+    // 陨石碰撞地球后销毁，造成伤害
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.transform.tag == "Meteor")
         {
-            health -= (int)collision.gameObject.GetComponent<MeteorScript>().flintiness;
+            if (!meteoritePointScript.invincibl)
+            {
+                health -= (int)collision.gameObject.GetComponent<MeteorScript>().flintiness;
+            }
             meteoritePointScript.RemoveMeteor(collision.gameObject);
             Debug.Log(health);
         }

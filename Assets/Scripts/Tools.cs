@@ -108,10 +108,11 @@ public static class Tools
     /// <returns></returns>
     public static bool Intersect(Vector2 objPos, float objscale, Vector2 mousePos, float width)
     {
+
         double x = objPos.x - mousePos.x;
         double y = objPos.y - mousePos.y;
         double distanceMax = Math.Sqrt(x * x + y * y);
-        if (distanceMax <= objscale * 100 + width)
+        if (distanceMax <= objscale * 50 + width * 10)
             return true;
         else
             return false;

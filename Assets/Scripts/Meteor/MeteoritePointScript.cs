@@ -15,6 +15,8 @@ public class MeteoritePointScript : MonoBehaviour
     public GameObject MeteorPoint;  // 默认掉落点
     public List<GameObject> Meteors;    // 所有的陨石
 
+    public bool invincibl; // 地球无敌模式
+
     void Start()
     {
         Init();
@@ -24,13 +26,15 @@ public class MeteoritePointScript : MonoBehaviour
     {
         speed = 1f;
         flintiness = 1f;
-        frequency = 3f;
+        frequency = 1f;
+        invincibl = false;
     }
 
     void Update()
     {
         Fire(frequency);
     }
+
 
     float nextFire = 0;
     /// <summary>
